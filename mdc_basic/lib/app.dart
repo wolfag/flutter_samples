@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mdc_basic/backdrop.dart';
+import 'package:mdc_basic/category_menu_page.dart';
 import 'package:mdc_basic/colors.dart';
 import 'package:mdc_basic/home.dart';
 import 'package:mdc_basic/login.dart';
+import 'package:mdc_basic/model/product.dart';
 import 'package:mdc_basic/supplemental/cut_corners_border.dart';
 
 final ThemeData _kShrineTheme = _buildShrineTheme();
@@ -9,27 +12,38 @@ final ThemeData _kShrineTheme = _buildShrineTheme();
 ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    primaryColor: kShrinePurple,
-    buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: kShrinePurple,
-      textTheme: ButtonTextTheme.primary,
-      colorScheme: ColorScheme.light().copyWith(primary: kShrinePurple),
-      // colorScheme: base.colorScheme.copyWith(secondary: kShrinePurple),
+    colorScheme: base.colorScheme.copyWith(
+      primary: kShrinePink100,
+      onPrimary: kShrineBrown900,
+      secondary: kShrineBrown900,
+      error: kShrineErrorRed,
     ),
-    scaffoldBackgroundColor: kShrineBackgroundWhite,
+    appBarTheme: base.appBarTheme.copyWith(
+      backwardsCompatibility: false,
+    ),
     textTheme: _buildShrineTextTheme(base.textTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-    primaryIconTheme: base.iconTheme.copyWith(
-      color: kShrineSurfaceWhite,
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: kShrinePink100,
     ),
+
+    // primaryColor: kShrinePurple,
+    // buttonTheme: base.buttonTheme.copyWith(
+    //   buttonColor: kShrinePurple,
+    //   textTheme: ButtonTextTheme.primary,
+    //   colorScheme: ColorScheme.light().copyWith(primary: kShrinePurple),
+    //   // colorScheme: base.colorScheme.copyWith(secondary: kShrinePurple),
+    // ),
+    // scaffoldBackgroundColor: kShrineBackgroundWhite,
+    // accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
+    // primaryIconTheme: base.iconTheme.copyWith(
+    //   color: kShrineSurfaceWhite,
+    // ),
     // buttonBarTheme: base.buttonBarTheme.copyWith(
     //   buttonTextTheme: ButtonTextTheme.accent,
     // ),
     // cardColor: kShrineBackgroundWhite,
-    // textSelectionTheme: TextSelectionThemeData(
-    //   selectionColor: kShrinePink100,
-    // ),
+
     // errorColor: kShrineErrorRed,
     inputDecorationTheme: InputDecorationTheme(
       border: CutCornersBorder(),
@@ -66,7 +80,21 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
       );
 }
 
-class ShrineApp extends StatelessWidget {
+class ShrineApp extends StatefulWidget {
+  @override
+  _ShrineAppState createState() => _ShrineAppState();
+}
+
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    print(category);
+    setState(() {
+      _currentCategory = category;
+    });
+  }
+
   Route<dynamic> _getRoute(RouteSettings settings) {
     if (settings.name != '/login') {
       return null;
@@ -83,7 +111,18 @@ class ShrineApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shrine',
       theme: _kShrineTheme,
-      home: HomePage(),
+      home: Backdrop(
+        currentCategory: _currentCategory,
+        frontLayer: HomePage(
+          category: _currentCategory,
+        ),
+        backLayer: CategoryMenuPage(
+          currentCategory: _currentCategory,
+          onCategoryTap: _onCategoryTap,
+        ),
+        frontTitle: Text('SHRINE'),
+        backTitle: Text('MENU'),
+      ),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
     );

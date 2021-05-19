@@ -16,7 +16,7 @@ class AsymmetricView extends StatelessWidget {
       return [];
     }
     return List.generate(_listItemCount(products.length), (index) {
-      double widthh = 0.59 * MediaQuery.of(context).size.width;
+      double width = 0.59 * MediaQuery.of(context).size.width;
       Widget column;
       if (index % 2 == 0) {
         int bottom = _evenCasesIndex(index);
@@ -24,13 +24,13 @@ class AsymmetricView extends StatelessWidget {
           bottom: products[bottom],
           top: products.length - 1 >= bottom + 1 ? products[bottom + 1] : null,
         );
-        widthh += 32.0;
+        width += 32.0;
       } else {
         column = OneProductCardColumn(product: products[_oddCasesIndex(index)]);
       }
 
       return Container(
-        width: widthh,
+        width: width,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: column,

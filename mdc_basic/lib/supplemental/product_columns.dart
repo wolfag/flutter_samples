@@ -18,14 +18,15 @@ class TwoProductCardColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const spaceHeight = 44.0;
+        const spaceHeight = 24.0;
         double heightOfCards = (constraints.biggest.height - spaceHeight) / 2.0;
         double heightOfImages = heightOfCards - ProductCard.kTextBoxHeight;
-        double imageAspectRatio = constraints.biggest.width / heightOfImages;
+        double imageAspectRatio = heightOfImages > 0.0
+            ? constraints.biggest.width / heightOfImages
+            : 49.0 / 33.0;
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        return ListView(
+          physics: const ClampingScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 28.0),
@@ -66,15 +67,16 @@ class OneProductCardColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    return ListView(
+      physics: const ClampingScrollPhysics(),
+      reverse: true,
       children: [
+        SizedBox(
+          height: 40.0,
+        ),
         ProductCard(
           product: product,
         ),
-        SizedBox(
-          height: 40.0,
-        )
       ],
     );
   }
