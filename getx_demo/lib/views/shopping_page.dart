@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_demo/controller/cart_controller.dart';
 import 'package:getx_demo/controller/shopping_controller.dart';
+import 'package:getx_demo/views/setting_page.dart';
 
 class ShoppingPage extends GetWidget {
   final shoppingCotroller = Get.put(ShoppingController());
@@ -11,6 +12,15 @@ class ShoppingPage extends GetWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
+      appBar: AppBar(
+        title: Text('shopping'.tr),
+        leading: IconButton(
+          onPressed: () {
+            Get.to(SettingPage());
+          },
+          icon: Icon(Icons.settings),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -21,7 +31,6 @@ class ShoppingPage extends GetWidget {
                     itemCount: shoppingCotroller.products.length,
                     itemBuilder: (context, index) {
                       bool isContain = true;
-                      print(cartController.items.length);
                       return Card(
                         margin: const EdgeInsets.all(12),
                         child: Padding(
@@ -69,7 +78,7 @@ class ShoppingPage extends GetWidget {
                                             );
                                           },
                                           child: Text(
-                                            'Remove',
+                                            'remove'.tr,
                                           ),
                                           style: ButtonStyle(
                                             backgroundColor:
@@ -96,7 +105,7 @@ class ShoppingPage extends GetWidget {
                                       //   ),
                                       // );
                                     },
-                                    child: Text('Add'),
+                                    child: Text('add'.tr),
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
@@ -117,7 +126,8 @@ class ShoppingPage extends GetWidget {
             Obx(
               () {
                 return Text(
-                  'Total amount: \$${cartController.totalPrice}',
+                  'total_amount_dollar_amount'.trParams(
+                      {'amount': cartController.totalPrice.toString()}),
                   style: TextStyle(
                     fontSize: 32,
                     color: Colors.white,
@@ -178,7 +188,7 @@ class Second extends GetWidget {
             TextButton(
               onPressed: () {
                 Get.defaultDialog(
-                  title: 'title',
+                  title: 'title'.tr,
                   actions: [
                     IconButton(
                       onPressed: () {},
