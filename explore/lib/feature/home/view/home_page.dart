@@ -1,4 +1,3 @@
-import 'package:explore/core/widgets/my_app_bar/my_app_bar.dart';
 import 'package:explore/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -34,19 +33,16 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      // appBar: isMobile
-      //     ? PreferredSize(
-      //         child: MyAppBarMobile(
-      //           opacity: _opacity,
-      //         ),
-      //         preferredSize: Size.fromHeight(AppBar().preferredSize.height))
-      //     : PreferredSize(
-      //         child: MyAppBarTablet(opacity: _opacity),
-      //         preferredSize: Size.fromHeight(1000),
-      //       ),
-      appBar: MyAppBar(
-        opacicy: _opacity,
-      ),
+      appBar: isMobile
+          ? PreferredSize(
+              child: MyAppBarMobile(
+                opacity: _opacity,
+              ),
+              preferredSize: Size.fromHeight(AppBar().preferredSize.height))
+          : PreferredSize(
+              child: MyAppBarTablet(opacity: _opacity),
+              preferredSize: Size.fromHeight(1000),
+            ),
       drawer: MyDrawer(),
       body: SingleChildScrollView(
         controller: _scrollController,
