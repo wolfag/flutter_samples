@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
   Widget emailInforText() {
-    return InfoText(label: 'Email', value: 'wolfag91@gmail.com');
+    return InfoText(label: 'Email', value: 'mail@gmail.com');
   }
 
   Widget addressInforText() {
